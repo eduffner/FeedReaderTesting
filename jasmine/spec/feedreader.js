@@ -92,9 +92,8 @@ $(function() {
             });
         });
         
-        it('exist', function(done) {
+        it('exist', function() {
             expect($(".feed .entry")).toBeDefined();
-            done();
         });
     });
 
@@ -115,9 +114,8 @@ $(function() {
             });
         });
 
-        it('has new content', function(done) {
+        it('has new content', function() {
             expect(newContent).not.toBe(content); 
-            done();
         });
     });
 }());

@@ -87,13 +87,13 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function(done) {
-            loadFeed(0, function() {
-                done();
-            });
+            loadFeed(0, done);
         });
         
-        it('exist', function() {
-            expect($(".feed .entry")).toBeDefined();
+        it('are loaded in feed container', function() {
+            var lengthEntries = $(".feed .entry").length;
+
+            expect(lengthEntries).toBeGreaterThan(0);
         });
     });
 
@@ -102,20 +102,25 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        var content,
+        var entry,
+            content,
             newContent;
         beforeEach(function(done) {
             loadFeed(0, function() {
-                content = $(".feed .entry"); 
-                loadFeed(1, function() {
-                    newContent = $(".feed .entry");
+                entry = $(".feed .entry")[0];
+                content = $(entry).text();
+
+                loadFeed(1, function() { 
+                    entry = $(".feed .entry")[0];
+                    newContent = $(entry).text();
+
                     done(); 
                 });
             });
         });
 
-        it('has new content', function() {
-            expect(newContent).not.toBe(content); 
+        it('has different content than previous feed', function() {
+            expect(newContent).not.toEqual(content); 
         });
     });
 }());
